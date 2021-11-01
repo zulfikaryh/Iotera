@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Power Meter</title>
+    <link rel="stylesheet" href="powermeter.css">
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.pie.min.js"></script>
+
+    <script src="//ajax.aspnetcdn.com/ajax/globalize/0.1.1/globalize.min.js"></script>
+    <script src="//ajax.aspnetcdn.com/ajax/globalize/0.1.1/cultures/globalize.cultures.js"></script>
+
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment-with-locales.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    <script src="usage.js"></script>
+    <script src="timepicker.js"></script>
+
+    <script type="text/javascript">
+
+        function getParameterByName(name, _default) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&#]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search == "" ? location.hash : location.search);
+            return results == null ? _default : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+        var ResizeContent = function () {
+            var windowHeight = $(window).height();
+            var headerHeight = $('.header').outerHeight(true);
+            var footerHeight = $('.footer').outerHeight(true);
+
+            $(".content").css({ maxHeight: (windowHeight - (headerHeight + footerHeight)) + 'px' });
+            RedrawComparisonGraph();
+        }
+
+        var refresh = function (callback) {
+
+            var dateTime = GetDateTime();
+            var order = $('input[name=order]:checked').val();
+
+            var hash = "timespan=" + dateTime.timespan + "&order=" + order;
+            if (timespan == "Custom")
+                hash += "&start=" + dateTime.Start.toISOString() + "&end=" + dateTime.End.toISOString();
+
+            location.hash = hash;
+
+            RefreshComparisonGraph(dateTime.Start, dateTime.End, callback);
+        }
+
+        $(function () {
+
+            $('.settingsiconright').click(function () {
+                window.location.href = "/configure.html";
+            });
+
+            $('.settingsiconleft').click(function () {
+                window.location.href = "/realtime.html";
+            });
+
+            $('#refresh1').click(refresh);
+
+            $(window).resize(function () {
+                ResizeContent();
+            });
+
+            var order = getParameterByName('order', null);
+            var timespan = getParameterByName('timespan', 'Instant');
+            var start = getParameterByName('start', '');
+            var end = getParameterByName('end', '');
+
+            InitializeDateTime(start, end, timespan, ResizeContent)
+
+            if (order != null) {
+                $('input[name=order]')
+                    .filter(function (index) { return $(this).val() === order; })
+                    .prop('checked', true);
+            }
+        });
+
+    </script>
+
+</head>
+
+<body>
+
+    <div class='header'></div>
+    <div id="image">
+        <img src='images/settings.png' class='settingsiconright' alt='1' />
+        <img src='images/table.png' class='settingsiconleft' alt='1' />
+    </div>
+    <div class="demo-container content">
+        <div id="placeholder3" class="placeholder100"></div>
+    </div>
+    <div class="footer">
+        <div id="table"></div>
+        <div id='buttons'>
+            <button id='refresh1'>Refresh</button>
+            <input type="radio" name="order" value="Min">Leeches
+            <input type="radio" name="order" value="Watts" checked>Usage
+            <input type="radio" name="order" value="Max">Hogs
+            <div id="reportrange">
+                <i class="fa fa-calendar"></i>&nbsp;
+                <span></span>
+                <i class="fa fa-caret-down"></i>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
