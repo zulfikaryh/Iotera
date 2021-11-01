@@ -29,7 +29,7 @@ cd ~
 # install and configure PiPowerMeter
 if [ ! -d "app" ]; then
     echo '>>> Install PiPowerMeter'
-    git clone https://github.com/crjens/PiPowerMeter.git app
+    git clone https://github.com/zulfikaryh/Iotera.git app
     cd app
     npm install
     ASK_TO_REBOOT=1
