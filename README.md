@@ -16,25 +16,13 @@ Features
    * All data stored locally in sqlite database
    * Web based monitoring portal for viewing energy usage and configuration
    * Ability to receive text alerts for overloads or other events.
- 
-
- ![hardware](https://raw.githubusercontent.com/crjens/PiPowerMeter/master/Documentation/DSC_0009.JPG)
 
 Screenshots
 -----------
-- [Main](https://raw.githubusercontent.com/crjens/PiPowerMeter/master/Documentation/main.png)
-- [Daily](https://raw.githubusercontent.com/crjens/PiPowerMeter/master/Documentation/graph.png)
-- [Instantaneous](https://raw.githubusercontent.com/crjens/PiPowerMeter/master/Documentation/instant.png)
-- [Readings](https://raw.githubusercontent.com/crjens/PiPowerMeter/master/Documentation/readings.png)
-- [Configuration](https://raw.githubusercontent.com/crjens/PiPowerMeter/master/Documentation/config.png)
 
 
 Additional Images
 -----------------
-- [Installed System](https://raw.githubusercontent.com/crjens/PiPowerMeter/master/Documentation/DSC_0077.JPG)
-- [Installed System 2](https://raw.githubusercontent.com/crjens/PiPowerMeter/master/Documentation/DSC_0078.JPG)
-- [Sensors](https://raw.githubusercontent.com/crjens/PiPowerMeter/master/Documentation/DSC_0002.JPG)
-- [Boards](https://raw.githubusercontent.com/crjens/PiPowerMeter/master/Documentation/DSC_0012.JPG)
 
 Hardware Installation
 ---------------------
@@ -68,11 +56,4 @@ Software Installation
 	2. It's recommended that you use the Lite version because it's smaller and installs faster but you can use either.
 3. login to Pi with Putty or other ssh client
 	1. the latest versions of Raspbian have ssh disabled.  You can enable ssh via raspi-config or just create an empty file named 'ssh' in the boot partition of the sd card.
-4. Install the PiPowerMeter software by running the following command (you must install with root privileges such as the built-in pi account):
-	1. wget -O - https://raw.githubusercontent.com/crjens/PiPowerMeter/master/setup.sh | bash
-5. run 'sudo raspi-config' 
-	1. set locale and timezone under Localisation options
-	2. expand filesystem under Advanced options
-	3. change user password (optional)
-	4. reboot when prompted after exiting raspi-config
-6. Open your browser to http://<Your Raspberry Pi's IP Address>:3000
+4. Install the PiPowerMeter software by running the following command 
